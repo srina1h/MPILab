@@ -1,0 +1,26 @@
+;Cube of a number from 0 to 9 and store XX00 onwards
+assume cs:code,ds:data
+data segment
+    n db 09h
+    org 0200h
+    res db ?
+data ends
+
+code segment
+    org 0100h
+start:  
+    mov ax,data
+    mov ds,ax
+    mov ax,0000h
+    mov AL,n
+    mov BL,n
+    MUL BL
+    MUL BL
+    MOV SI,OFFSET res
+    MOV [SI],AL
+    INC SI
+    MOV [SI],AH
+    mov AH,4CH
+    INT 21H
+code ends
+end start

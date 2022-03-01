@@ -1,0 +1,23 @@
+assume CS:code,DS:data
+data segment
+count dw 0010h
+data ends
+code segment
+START:mov ax,data
+mov ds,ax
+mov cx,count 
+L1:mov ah,1 
+int 21H 
+cmp al,60H
+jge HERE
+add al,20H
+jmp SKIP
+HERE:sub al,20H 
+SKIP:mov ah,2 
+mov dl,al 
+int 21H 
+loop L1 
+mov ah,4CH
+int 21H
+code ends
+end start

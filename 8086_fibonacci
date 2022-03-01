@@ -1,0 +1,38 @@
+;fibonacci
+
+assume cs:code, ds:data
+
+data segment
+    fib db ?
+    org 0010h
+    n dw 0008h
+data ends
+
+code segment
+
+    	org 0100h
+
+start:  MOV AX, data
+        MOV DS, AX
+	mov cx, n	
+
+	mov al, 00h
+	MOV SI, offset fib
+	mov [si], al
+	inc si
+	inc al
+	mov [si],al
+
+	sub cx,0002h
+
+L1:	mov al,[si-1]
+	add al,[si]
+	inc si
+	mov [si],al
+	loop l1
+
+	MOV AH, 4ch
+        INT 21h
+
+code ends
+end start

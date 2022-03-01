@@ -1,0 +1,38 @@
+assume cs:code,ds:data
+data segment
+arr db 04h, 08h, 02h, 0Ah, 01h, 03h
+arr_size dw 0006h
+oddc db 00h
+evenc db 00h
+data ends
+code segment
+org 0100h
+start:
+mov ax,data
+mov ds,ax
+mov cl, 06h
+mov si, OFFSET arr
+mov bl, 02h
+mov dx, 0000h
+mov ax,0000h
+loop1:
+mov al, [si]
+div bl
+cmp ah, 00 ;if remainder 0 => even
+jnz odd
+inc dh ; dh for even count
+jmp skip
+odd :
+inc dl;
+skip :
+inc si
+dec cl
+cmp cl, 00h
+jnz loop1
+here:
+mov oddc, dl
+mov evenc, dh
+mov ah,4ch
+int 21h
+code ends
+end start

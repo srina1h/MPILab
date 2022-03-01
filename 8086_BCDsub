@@ -1,0 +1,34 @@
+assume cs:code,ds:data
+
+data segment 
+	opr1 db 99h
+        opr2 db 54h
+	diff db 00h
+        sign db 00h      
+data ends
+
+code segment
+        org 0100h
+start:  mov ax,data
+        mov ds,ax
+
+        mov al,opr1
+        mov bl,opr2
+	mov ch,00h
+	sub al,bl
+	das
+
+	jnc here
+	inc ch
+	mov dl,99h
+	sub dl,al
+	inc dl
+	mov al,dl
+	das
+	
+here:	mov diff,al
+	mov sign,ch
+    	mov ah,4ch
+	int 21h
+code ends
+end start

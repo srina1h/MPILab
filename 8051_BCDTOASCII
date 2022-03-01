@@ -1,0 +1,18 @@
+		mov r0, #010h ; start position of list
+		mov r1, #05h ; loop counter
+		mov r2, #00h ; lsb of accumulator
+		mov r5, #00h ; msb of accumulator
+
+loop: 	mov a,@r0
+		mov b,#02
+		div ab
+		mov r4,b
+		cjne r4,#01,here
+		mov a,@r0
+		add a,r2
+		jnc good
+		inc r5
+good:	mov r2,a
+here:	inc r0
+		djnz r1,loop
+halt: 	sjmp halt

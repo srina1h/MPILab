@@ -1,0 +1,39 @@
+assume cs:code,ds:data
+data segment
+org 1100h
+input db 01h,02h,03h,04h,05h,06h,07h,08h,09h org 1110h
+count equ 09h
+data ends
+
+code segment
+
+org 0100h
+start: mov ax,data
+
+mov ds,ax
+mov ah,00h
+mov ax, count
+here: mov cx, count
+dec cx
+;inner loop
+mov si, 1100h ; point si at first address(XX00)
+
+
+label1:
+mov bl, [si] ;move first element to bl
+cmp bl,[si+1] ; compare with next element
+jge skip ; if its greater move to skip
+xchg bl,[si+1] ; else swap them
+
+mov [si],bl
+skip:
+inc si ;move to next element
+
+
+loop label1 ;loop till cx becomes 0
+dec ax ; do till ax=0
+jnz here
+mov ah,4ch ; terminate
+int 21h
+code ends
+end start

@@ -1,0 +1,11 @@
+mov A, r1
+swap A
+anl A, #0fh
+mov B, #0ah
+mul AB
+mov r2,A
+mov A, r1
+anl A, #0fh
+add A, r2
+mov r0,A
+here : sjmp here

@@ -1,0 +1,41 @@
+assume cs:code,ds:data
+data segment
+opr1 dd 12121212h
+opr2 dd 33343334h
+result dd 00h
+carry db 00h
+data ends
+code segment
+start: mov ax,data
+mov ds,ax
+mov cl,00h
+mov ax,word ptr opr1
+mov dx,word ptr opr2
+sub ax,dx
+jc here
+jnc here1
+here:
+	neg ax
+	mov word ptr result,ax
+	mov ax,word ptr opr1+2
+	mov dx,word ptr opr2+2
+	sub ax,dx
+	neg ax
+	mov word ptr result+2,ax
+	inc cl
+	mov carry,cl
+	mov ah,4ch
+	int 21h	
+here1:
+	mov word ptr result,ax
+	mov ax,word ptr opr1+2
+	mov dx,word ptr opr2+2
+	sub ax,dx
+	mov word ptr result+2,ax
+	mov carry,cl
+	mov ah,4ch
+	int 21h
+code ends
+end start
+
+

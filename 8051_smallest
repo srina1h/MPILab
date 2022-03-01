@@ -1,0 +1,10 @@
+mov r0, #02h ; addr of first element
+mov r1 ,#04h ; count
+loop:
+mov A, @r0
+cjne A, 10h, here
+here: jnc skip
+mov 10h,A
+skip:inc r0
+djnz r1 , loop
+stop: sjmp stop

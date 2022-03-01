@@ -1,0 +1,32 @@
+;A block of 10 data is stored in memory from XX00 to XX09. Transfer data to YY00 to YY09 in reverse
+;Code below is done for 5
+assume cs:code,ds:data
+
+data segment
+    count dw 0005H
+    org 0100h
+    xdata db 01h,02h,03h,04h,05H
+    org 0200h
+    ydata db ?
+data ends
+
+code segment
+    org 0300h
+start:
+    mov AX,data
+    mov ds,AX
+    MOV SI,[0104h]
+    MOV DI,[0200h]
+    MOV CX,count
+HERE:
+    MOV AL,[SI]
+    MOV DL,[DI]
+    MOV [DI],AL
+    MOV [SI],DL
+    DEC SI
+    INC DI
+    loop HERE
+    MOV AH,4CH
+    int 21H
+code ends
+end start
